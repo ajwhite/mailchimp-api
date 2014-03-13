@@ -17,7 +17,7 @@
 class MailChimpAPIWrapper
 {
     private $api_key;
-    private $api_endpoint_template = 'https://<dc>.api.mailchimp.com/2.0'
+    private $api_endpoint_template = 'https://<dc>.api.mailchimp.com/2.0';
     private $api_endpoint;
     private $verify_ssl   = false;
 

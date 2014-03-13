@@ -19,12 +19,34 @@
 			return $listData['data'];
 		}
 		
-		public function createCampaign(){
-			
+		public function createCampaign($list, $subject, $title, $htmlTemplate, $textTemplate){
+			$campaign = $this->call('campaigns/create', array(
+				'type'	=> 'regular',
+				'options' => array(
+					'list'	=> $list,
+					'subject' => $subject,
+					'title' => $title
+				),
+				'content' => array(
+					'html' => $htmlTemplate,
+					'text' => $textTemplate
+				)
+			));
+			return $campaign['data']['cid'];
 		}
 		
 		public function sendCampaign($campaignID){
-			
+			$this->call('campaigns/send', array('cid' => $campaignID));
+		}
+		
+		public function testCampaign($campaignID, $receiver){
+			if (!is_array($receiver)){
+				$receiver = array($receiver);
+			}
+			$this->call('campaigns/send-test', array(
+				'cid' => $campaignID,
+				'test_emails' => $receiver
+			));
 		}
 		
 		public function createAndSendCampaign(){
