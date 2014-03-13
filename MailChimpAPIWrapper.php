@@ -17,19 +17,28 @@
 class MailChimpAPIWrapper
 {
     private $api_key;
-    private $api_endpoint = 'https://<dc>.api.mailchimp.com/2.0';
+    private $api_endpoint_template = 'https://<dc>.api.mailchimp.com/2.0'
+    private $api_endpoint;
     private $verify_ssl   = false;
 
     /**
      * Create a new instance
      * @param string $api_key Your MailChimp API key
      */
-    function __construct($api_key)
+    function __construct($api_key = false)
     {
-        $this->api_key = $api_key;
-        list(, $datacentre) = explode('-', $this->api_key);
-        $this->api_endpoint = str_replace('<dc>', $datacentre, $this->api_endpoint);
+    	if ($api_key){
+	    	$this->setApiKey($api_key);
+    	}
     }
+    
+    public function setApiKey($api_key){
+	    $this->api_key = $api_key;
+	    list(, $datacentre) = explode('-', $this->api_key);
+	    $this->api_endpoint = str_replace('<dc>', $datacentre, $this->api_endpoint_template);
+    }
+    
+
 
     /**
      * Call an API method. Every request needs the API key, so that is added automatically -- you don't need to pass it in.
